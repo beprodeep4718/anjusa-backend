@@ -8,7 +8,7 @@ const authRouter = require('./routes/auth-route');
 const PORT = 3000 || process.env.PORT ;
 
 const corsOptions = {
-    origin: ['http://localhost:5173', 'http://192.168.181.193:5173'],
+    origin: ['https://www.anjusa.in/', 'https://www.anjusaacademy.com/'],
     methods: "GET, POST, PUT, DELETE, PATCH",
     credentials: true,
 }
