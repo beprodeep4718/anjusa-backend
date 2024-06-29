@@ -7,11 +7,11 @@ const authRouter = require("./routes/auth-route");
 
 const PORT = 3000 || process.env.PORT;
 
+
 // List of allowed origins
 const allowedOrigins = [
-  "https://www.anjusa.in",
-  "https://www.anjusaacademy.com/",
-  "http://localhost:5173/",
+  'https://www.anjusaacademy.com',
+  'https://www.anjusa.in'
 ];
 
 const corsOptions = {
@@ -22,14 +22,16 @@ const corsOptions = {
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed methods
-  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
+// Use CORS middleware with the specified options
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
