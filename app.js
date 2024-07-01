@@ -11,7 +11,8 @@ const PORT = 3000 || process.env.PORT;
 // List of allowed origins
 const allowedOrigins = [
   'https://www.anjusaacademy.com',
-  'https://www.anjusa.in'
+  'https://www.anjusa.in',
+  'http://localhost:5173'
 ];
 
 const corsOptions = {
