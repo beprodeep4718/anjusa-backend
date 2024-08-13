@@ -8,7 +8,7 @@ const authRouter = require("./routes/auth-route");
 const PORT = 3000 || process.env.PORT;
 
 
-// List of allowed origins
+//! List of allowed origins
 const allowedOrigins = [
   'https://www.anjusaacademy.com',
   'https://www.anjusa.in',

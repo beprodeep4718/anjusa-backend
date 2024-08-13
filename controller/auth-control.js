@@ -12,7 +12,7 @@ const addNotice = async (req, res) => {
     const { desc } = req.body;
     const newNotice = new Notice({ desc });
     await newNotice.save();
-    res.status(200).json({ message: "Success" });
+    res.status(201).json({ message: "Success" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Server Error" });
