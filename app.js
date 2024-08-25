@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const connectDB = require("./utils/db");
-const authRouter = require("./routes/auth-route");
+const noticeRouter = require("./routes/notice-route");
 
 const PORT = 3000 || process.env.PORT;
 
@@ -36,7 +36,8 @@ app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
-app.use("/api/auth", authRouter);
+app.use("/api", noticeRouter);
+app.use("/user", require("./routes/user-route"))
 
 const start = () => {
   try {

@@ -10,7 +10,8 @@ const adminLogin = (req, res) => {
 const addNotice = async (req, res) => {
   try {
     const { desc } = req.body;
-    const newNotice = new Notice({ desc });
+    const description = desc.trim();
+    const newNotice = new Notice({ desc: description });
     await newNotice.save();
     res.status(201).json({ message: "Success" });
   } catch (error) {
