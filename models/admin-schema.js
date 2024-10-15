@@ -1,16 +1,17 @@
 const { Schema, model } = require("mongoose");
 
-const adminSchema = new Schema({
-  desc: {
-    type: String,
-    required: true,
+const adminSchema = new Schema(
+  {
+    desc: {
+      type: String,
+      required: true,
+    }
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  {
+    timestamps: true,
   }
-});
+);
 
-const Notice = new model('Notice', adminSchema);
+const Notice = new model("Notice", adminSchema);
 
 module.exports = Notice;

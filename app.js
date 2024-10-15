@@ -5,19 +5,19 @@ const cors = require("cors");
 const connectDB = require("./utils/db");
 const noticeRouter = require("./routes/notice-route");
 
-const PORT = 3000 || process.env.PORT;
-
+const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
 
 //! List of allowed origins
 const allowedOrigins = [
   'https://www.anjusaacademy.com',
   'https://www.anjusa.in',
-  'http://localhost:5173'
+  'http://localhost:5173',
+  'http://192.168.131.193:5173'
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.indexOf(origin) !== -1) {
@@ -30,19 +30,21 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Use CORS middleware with the specified options
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); 
 app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
 app.use("/api", noticeRouter);
-app.use("/user", require("./routes/user-route"))
+app.use("/user", require("./routes/user-route"));
+app.get('/', (req, res) => {
+  res.send('Welcome to the Notice API');
+})
 
 const start = () => {
   try {
-    app.listen(PORT, () => {
-      console.log(`listening on ${PORT}`);
+    app.listen(PORT, HOST, () => {
+      console.log(`Server is running on http://${HOST}:${PORT} 🎉`);
     });
     connectDB(process.env.MONGO_URI);
   } catch (error) {
