@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const connectDB = require("./utils/db");
-const noticeRouter = require("./routes/notice-route");
 
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
@@ -13,7 +12,7 @@ const allowedOrigins = [
   'https://www.anjusaacademy.com',
   'https://www.anjusa.in',
   'http://localhost:5173',
-  'http://192.168.131.193:5173'
+  'http://192.168.96.193:5173'
 ];
 
 const corsOptions = {
@@ -35,7 +34,7 @@ app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
-app.use("/api", noticeRouter);
+app.use("/api", require("./routes/notice-route"));
 app.use("/user", require("./routes/user-route"));
 app.get('/', (req, res) => {
   res.send('Welcome to the Notice API');
