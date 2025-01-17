@@ -1,5 +1,5 @@
-const { Aggregate } = require("mongoose");
-const Notice = require("../models/admin-schema");
+const Notice = require("../models/notice.model");
+const cloudinary = require("../config/cloudinary");
 
 const adminLogin = (req, res) => {
   res.json({
@@ -9,9 +9,15 @@ const adminLogin = (req, res) => {
 
 const addNotice = async (req, res) => {
   try {
-    const { desc } = req.body;
-    const description = desc.trim();
-    const newNotice = new Notice({ desc: description });
+    const newNotice = new Notice({
+      desc: req.body.desc ? req.body.desc.trim() : "",
+      Image: req.file
+        ? {
+            url: req.file.path,
+            public_id: req.file.filename,
+          }
+        : { url: "", public_id: "" },
+    });
     await newNotice.save();
     res.status(201).json({ message: "Success" });
   } catch (error) {
@@ -33,6 +39,10 @@ const getNotices = async (req, res) => {
 const deleteNotice = async (req, res) => {
   try {
     const { id } = req.params;
+    const notice = await Notice.findById(id);
+    if (notice.Image.public_id) {
+      await cloudinary.uploader.destroy(notice.Image.public_id);
+    }
     const deletedNotice = await Notice.findByIdAndDelete(id);
     if (!deletedNotice) {
       return res.status(404).json({ message: "Notice not found" });
@@ -64,10 +74,25 @@ const updateNotice = async (req, res) => {
   }
 };
 
+const getNoticeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await Notice.findById(id);
+    if (!data) {
+      return res.status(404).json({ message: "Notice not found" });
+    }
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
+
 module.exports = {
   adminLogin,
   addNotice,
   getNotices,
   deleteNotice,
   updateNotice,
+  getNoticeById,
 };
